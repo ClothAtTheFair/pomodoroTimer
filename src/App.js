@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
 
-let countdown = 0;
-let seconds = 1500;
-
-let isBreak = true;
-let isPaused = true;
-
 class App extends Component {
   constructor(props) {
     super(props);
     // placeholder
     this.state = {
+      configMin: 25,
       workMin: 25,
       workSec: 0,
       breakMin: 10, 
-      breakSec: 0
+      breakSec: 0,
+      isBreak: false,
+      disabled: false,
     }
   }
 
@@ -29,6 +26,7 @@ class App extends Component {
 
   handleStart = e => {
     e.preventDefault();
+    this.setState({disabled:true});
     this.myInterval = setInterval(() => {
       const {workSec, workMin} = this.state
  
@@ -39,7 +37,10 @@ class App extends Component {
       }
       if (workSec === 0) {
         if (workMin === 0) {
-          clearInterval(this.myInterval)
+          this.setState ({
+            isBreak: true
+          });
+          this.handleBreakStart();
         } else {
           this.setState(({workMin}) => ({
             workMin: workMin -1,
@@ -50,11 +51,33 @@ class App extends Component {
     }, 1000)
   }
   // This acts like a pause button currently
-  handleReset = e => {
+  handlePause = e => {
     e.preventDefault();
+    this.setState({disabled:false});
     clearInterval(this.myInterval)
   }
 
+  handleBreakStart = () => {
+    clearInterval(this.myInterval)
+    this.myInterval = setInterval(() => {
+    const {breakMin, breakSec} = this.state
+      if (breakSec > 0) {
+        this.setState(({breakSec}) => ({
+          breakSec: breakSec-1
+        }))
+      }
+      if (breakSec === 0) {
+        if (breakMin === 0) {
+          clearInterval(this.myInterval)
+        } else {
+          this.setState(({breakMin}) => ({
+            breakMin: breakMin -1,
+            breakSec: 59
+          }))
+        }
+      }
+    }, 1000)
+  }
  
 
   handleWorkPlus = e => {
@@ -95,13 +118,19 @@ class App extends Component {
  
 
 render() {
+  const isBreak = this.state.isBreak;
   return (
     <div className="container">
     <h1>Under Construction</h1>
       <div id="pomodoro">
         <div id="status"></div>
-        <h4>Time Remaining: {this.state.workMin}:{this.state.workSec < 10 ? `0${this.state.workSec}` : this.state.workSec} </h4>
-        <button onClick={this.handleStart}>Start</button>
+        <h4>Yikes Forever</h4>
+        { isBreak 
+          ?<h4>Break Remaining: {this.state.breakMin}:{this.state.breakSec < 10 ? `0${this.state.breakSec}` : this.state.breakSec}</h4>
+          : <h4>Time Remaining: {this.state.workMin}:{this.state.workSec < 10 ? `0${this.state.workSec}` : this.state.workSec} </h4>
+        }
+        <button onClick={this.handleStart} disabled={this.state.disabled}>Start</button>
+        <button id="pause" class="btn" onClick={this.handlePause} >Pause</button>
       </div>
       
       <div class="settings">
@@ -111,8 +140,6 @@ render() {
           <div><span>{this.state.workMin}</span> mins</div>
           <button id="work-minus" onClick={this.handleWorkMinus}>-</button>
         </div>
-        
-        <button id="reset" class="btn" onClick={this.handleReset} >RESET</button>
         
         <div id="break">
           <p>Break Duration</p>

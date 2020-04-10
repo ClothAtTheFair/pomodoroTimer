@@ -17,7 +17,8 @@ class App extends Component {
       isBreak: false,
       disabled: false,
       pomodoroThisMonth: 0,
-      allTimePomodoro: 0
+      allTimePomodoro: 0,
+      month: new Date().toLocaleDateString()
     }
   }
 
@@ -163,12 +164,13 @@ render() {
         
         <div id="break">
           <p>Break Duration</p>
-          <button id="break-plus" className="button"  onClick={this.handleBreakPlus}>+</button>
+          <button id="break-plus" className="button"  onClick={this.handleBreakPlus} disabled={this.state.disabled}>+</button>
           <div><span id="break-min">{this.state.breakMin}</span> mins </div>
-          <button id="break-minus"  className="button" onClick={this.handleBreakMinus}>-</button>
+          <button id="break-minus"  className="button" onClick={this.handleBreakMinus} disabled={this.state.disabled}>-</button>
         
         </div>
-        <h4>Pomodoro's completed all time: <span>{this.state.allTimePomodoro}</span></h4>
+        <h4 className="allTime">Pomodoro's completed all time: <span>{this.state.allTimePomodoro}</span></h4>
+        <h4><span>{this.state.month}</span></h4>
     </div>
     </div>
   );

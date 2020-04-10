@@ -1,15 +1,29 @@
 
+html {
+  background-color: gray;
+}
+
 .title {
-  color: red;
+  color: black;
   text-align: center;
 }
 
 .container{
+  height: 100%;
   text-align: center;
+  background-image: url(./static/tomato-1322328-1279x852.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: gray;
 }
 
 .button {
   font-size: 16px;
   border-radius: 4px;
   display: inline-block;
+}
+
+.allTime {
+  color: red;
 }

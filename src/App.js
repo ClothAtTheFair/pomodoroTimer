@@ -96,7 +96,8 @@ class App extends Component {
       isBreak: false,
       workMin: 25,
       workSec: 0,
-      breakMin: 10
+      breakMin: 10,
+      disabled: false
     });
   }
  
@@ -169,7 +170,7 @@ render() {
           <button id="break-minus"  className="button" onClick={this.handleBreakMinus} disabled={this.state.disabled}>-</button>
         
         </div>
-        <h4 className="allTime">Pomodoro's completed all time: <span>{this.state.allTimePomodoro}</span></h4>
+        <h4 className="allTime">Pomodoro's completed this session: <span>{this.state.allTimePomodoro}</span></h4>
         <h4><span>{this.state.month}</span></h4>
     </div>
     </div>

@@ -3,6 +3,7 @@ import * as firebase from 'firebase';
 var firebaseConfig = {
     apiKey: "AIzaSyAbjV0Wlyq1JKbr7S1C8chiV8u2rmHAheo",
     authDomain: "react-pomodoro-tracker.firebaseapp.com/",
+    databaseURL: "https://firedux-todo-1230c.firebaseio.com",
     projectId: "firedux-todo-1230c",
     storageBucket: "firedux-todo-1230c.appspot.com",
     messagingSenderId: "8261358458",
